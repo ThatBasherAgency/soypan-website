@@ -495,6 +495,19 @@
                     document.documentElement.lang = this.getAttribute('data-lang');
                 });
             });
+
+            // Handle external links
+            const externalLinks = document.querySelectorAll('a[href*="bit.ly"]');
+            externalLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const url = this.getAttribute('href');
+                    const newWindow = window.open(url, '_blank');
+                    if (newWindow) {
+                        newWindow.focus();
+                    }
+                });
+            });
         });
     </script>
 </head>
@@ -523,7 +536,7 @@
                 </span>
             </h1>
 
-            <a href="https://bit.ly/PAN365" class="cta-button" target="_blank" rel="noopener noreferrer">
+            <a href="https://bit.ly/PAN365" class="cta-button">
                 <span data-lang-en>GET YOUR FREE SPINS</span>
                 <span data-lang-es>OBTÉN TUS GIROS GRATIS</span>
             </a>
@@ -550,7 +563,7 @@
         <div class="casino-options">
             <div class="casino-option">
                 <div class="casino-name">Bet365</div>
-                <a href="https://bit.ly/PAN365" class="play-button" target="_blank" rel="noopener noreferrer">
+                <a href="https://bit.ly/PAN365" class="play-button">
                     <span data-lang-en>CLAIM</span>
                     <span data-lang-es>CANJEAR</span>
                 </a>
