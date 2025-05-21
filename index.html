@@ -476,40 +476,52 @@
             }
         }
     </style>
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Language switcher functionality
-            const languageButtons = document.querySelectorAll('.language-selector button');
-            
-            languageButtons.forEach(button => {
-                button.addEventListener('click', function() {
-                    // Remove active class from all buttons
-                    languageButtons.forEach(btn => {
-                        btn.classList.remove('active');
-                    });
-                    
-                    // Add active class to clicked button
-                    this.classList.add('active');
-                    
-                    // Set html lang attribute based on selection
-                    document.documentElement.lang = this.getAttribute('data-lang');
+   <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Language switcher functionality
+        const languageButtons = document.querySelectorAll('.language-selector button');
+        
+        languageButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                // Remove active class from all buttons
+                languageButtons.forEach(btn => {
+                    btn.classList.remove('active');
                 });
-            });
-
-            // Handle external links
-            const externalLinks = document.querySelectorAll('a[href*="bit.ly"]');
-            externalLinks.forEach(link => {
-                link.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    const url = this.getAttribute('href');
-                    const newWindow = window.open(url, '_blank');
-                    if (newWindow) {
-                        newWindow.focus();
-                    }
-                });
+                
+                // Add active class to clicked button
+                this.classList.add('active');
+                
+                // Set html lang attribute based on selection
+                document.documentElement.lang = this.getAttribute('data-lang');
             });
         });
-    </script>
+
+        // Handle all external links
+        document.querySelectorAll('a[href*="bit.ly"]').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                
+                // Store the original bit.ly URL
+                const bitlyUrl = this.href;
+                
+                // Create a hidden iframe to handle the redirect
+                const iframe = document.createElement('iframe');
+                iframe.style.display = 'none';
+                document.body.appendChild(iframe);
+                
+                // Set the iframe src to the bit.ly URL
+                iframe.src = bitlyUrl;
+                
+                // Clean up the iframe after a short delay
+                setTimeout(() => {
+                    document.body.removeChild(iframe);
+                }, 1000);
+            });
+        });
+    });
+</script>
+
 </head>
 <body>
     <div class="top-bar">
@@ -536,10 +548,11 @@
                 </span>
             </h1>
 
-            <a href="https://bit.ly/PAN365" class="cta-button">
-                <span data-lang-en>GET YOUR FREE SPINS</span>
-                <span data-lang-es>OBTÉN TUS GIROS GRATIS</span>
-            </a>
+<a href="https://bit.ly/PAN365" class="cta-button" target="_blank" rel="noopener noreferrer">
+    <span data-lang-en>GET YOUR FREE SPINS</span>
+    <span data-lang-es>OBTÉN TUS GIROS GRATIS</span>
+</a>
+
         </div>
 
         <div class="steps-container">
@@ -563,7 +576,7 @@
         <div class="casino-options">
             <div class="casino-option">
                 <div class="casino-name">Bet365</div>
-                <a href="https://bit.ly/PAN365" class="play-button">
+                <a href="https://bit.ly/PAN365" class="play-button" target="_blank" rel="noopener noreferrer">
                     <span data-lang-en>CLAIM</span>
                     <span data-lang-es>CANJEAR</span>
                 </a>
